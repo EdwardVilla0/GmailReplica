@@ -1,7 +1,7 @@
 import { Button } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
 import React from 'react'
-import './SendMail.js'
+import './SendMail.css'
 
 function SendMail() {
     return (
