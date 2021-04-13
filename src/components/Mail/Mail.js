@@ -70,7 +70,7 @@ function Mail() {
                 </div>
 
                 <div className="mail__message">
-                    this is a message
+                    <p>testing message</p>
                 </div>
             </div>
         </div>
