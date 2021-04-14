@@ -23,13 +23,13 @@ function SendMail() {
             <form onSubmit={handleSubmit()}>
                 <input type="email" placeholder="To" name="to" {...register("email", { required: true })} />
                 {errors.email && <p className="sendMail__error">To is required</p>}
-                <input name="subject" placeholder="Subject" type="text" />
+                <input name="subject" placeholder="Subject" type="text" {...register("subject", { required: true })} />
                 <input
                     name="message"
                     placeholder="Messages"
                     type="text"
                     className="sendMail__message"
-
+                    {...register("message", { required: true })}
                 />
                 <div className="sendMail__options">
                     <Button
