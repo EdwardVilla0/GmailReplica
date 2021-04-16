@@ -1,6 +1,6 @@
 import { Button } from '@material-ui/core'
 import CloseIcon from '@material-ui/icons/Close'
-import React from 'react'
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form';
 import { closeSendMessage } from '../../features/mailSlice';
 import { useDispatch } from 'react-redux';
@@ -9,17 +9,19 @@ import { db } from '../../firebase';
 import firebase from 'firebase'
 
 function SendMail() {
+    const [subject, setSubject] = useState('');
+    const [message, setMessage] = useState('');
+    const [email, setEmail] = useState('');
 
-    const { register, formState: { errors }, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm('');
     const onSubmit = (formData) => {
-        db.collections('emails').add({
-            to: formData.to,
-            subject: formData.subject,
-            message: formData.message,
+        console.log(email);
+        db.collection('emails').add({
+            email: email,
+            subject: subject,
+            message: message,
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
         });
-
-        dispatch(closeSendMessage())
     };
     const dispatch = useDispatch();
     return (
@@ -29,10 +31,27 @@ function SendMail() {
                 <CloseIcon className="sendMail__close" onClick={() => dispatch(closeSendMessage())} />
             </div>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <input type="email" placeholder="To" name="to" {...register("email", { required: true })} />
-                {errors.email && <p className="sendMail__error">To is required</p>}
-                <input name="subject" placeholder="Subject" type="text" />
-                <input name="message" placeholder="Messages" type="text" className="sendMail__message" />
+                <input
+                    type="email"
+                    placeholder="To"
+                    name="to"
+                    onChange={(e) => setEmail(e.target.value)}
+                // {...register("email", { required: true })} 
+                />
+                    // {errors.email && <p className="sendMail__error">To is required</p>}
+                <input
+                    type="text"
+                    placeholder="Subject"
+                    name="subject"
+                    onChange={(e) => setSubject(e.target.value)}
+
+                />
+                <input
+                    name="message"
+                    placeholder="Messages"
+                    type="text"
+                    className="sendMail__message"
+                    onChange={(e) => setMessage(e.target.value)} />
                 <div className="sendMail__options">
                     <Button
                         className="sendMail__send"
