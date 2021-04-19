@@ -9,12 +9,25 @@ import SettingsIcon from '@material-ui/icons/Settings'
 import InboxIcon from '@material-ui/icons/Inbox'
 import PeopleIcon from '@material-ui/icons/People'
 import LocalOfferIcon from '@material-ui/icons/LocalOffer'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './EmailList.css'
 import Section from '../Section/Section'
 import EmailRow from '../EmailRow/EmailRow'
+import { db } from '../../firebase'
 
 function EmailList() {
+    const [emails, setEmails] = useState([]);
+
+    useEffect(() => {
+        db.collection('emails').orderBy('timestamp', 'desc').onSnapshot((snapShot) =>
+            setEmails(
+                snapShot.docs.map((doc) => ({
+                    id: doc.id,
+                    data: doc.data()
+                }))
+            )
+        );
+    }, []);
     return (
         <div className="emailList">
             <div className="emailList__settings">
