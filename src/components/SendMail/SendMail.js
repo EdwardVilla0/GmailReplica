@@ -14,7 +14,7 @@ function SendMail() {
     const [email, setEmail] = useState('');
 
     const { register, formState: { errors }, handleSubmit } = useForm('');
-    const onSubmit = (formData) => {
+    const onSubmit = () => {
         console.log(email);
         db.collection('emails').add({
             email: email,
