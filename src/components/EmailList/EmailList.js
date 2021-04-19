@@ -16,7 +16,7 @@ import EmailRow from '../EmailRow/EmailRow'
 import { db } from '../../firebase'
 
 function EmailList() {
-    const [emails, setEmails] = useState([]);
+    const [email, setEmails] = useState([]);
 
     useEffect(() => {
         db.collection('emails').orderBy('timestamp', 'desc').onSnapshot((snapShot) =>

@@ -37,9 +37,9 @@ function SendMail() {
                     placeholder="To"
                     name="to"
                     onChange={(e) => setEmail(e.target.value)}
-                // {...register("email", { required: true })} 
+                    {...register("email", { required: true })}
                 />
-                    // {errors.email && <p className="sendMail__error">To is required</p>}
+                {errors.email && <p className="sendMail__error">To is required</p>}
                 <input
                     type="text"
                     placeholder="Subject"
