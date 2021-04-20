@@ -16,7 +16,7 @@ import EmailRow from '../EmailRow/EmailRow'
 import { db } from '../../firebase'
 
 function EmailList() {
-    const [email, setEmails] = useState([]);
+    const [emails, setEmails] = useState([]);
 
     useEffect(() => {
         db.collection('emails').orderBy('timestamp', 'desc').onSnapshot((snapShot) =>
@@ -51,12 +51,17 @@ function EmailList() {
                 <Section Icon={LocalOfferIcon} title="Promotion" color="green" />
             </div>
             <div className="emailList__list">
-                <EmailRow
-                    title="twitch"
-                    subject="testing"
-                    description="is it working"
-                    time="10pm"
-                />
+                {emails.map(({ id, data: { email, subject, message, timestamp } }) => (
+                    <EmailRow
+                        id={id}
+                        key={id}
+                        title={email}
+                        subject={subject}
+                        description={message}
+                        time={new Date(timestamp?.seconds * 1000).toUTCString()}
+                    />
+                ))}
+
             </div>
         </div>
     )
