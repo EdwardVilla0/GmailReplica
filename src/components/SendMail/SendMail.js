@@ -13,7 +13,7 @@ function SendMail() {
     const [message, setMessage] = useState('');
     const [email, setEmail] = useState('');
 
-    const { register, formState: { errors }, handleSubmit } = useForm('');
+    const { handleSubmit } = useForm('');
     const onSubmit = () => {
         console.log(email);
         db.collection('emails').add({
@@ -37,9 +37,10 @@ function SendMail() {
                     placeholder="To"
                     name="to"
                     onChange={(e) => setEmail(e.target.value)}
-                    {...register("email", { required: true })}
+
+                    required
                 />
-                {errors.email && <p className="sendMail__error">To is required</p>}
+
                 <input
                     type="text"
                     placeholder="Subject"
